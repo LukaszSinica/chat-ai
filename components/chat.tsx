@@ -1,26 +1,20 @@
-import React from 'react'
+import { ChatMessage } from "@/app/page"
+import { ScrollArea } from "./ui/scroll-area";
 
-const chatMessages = [
-    {
-        "from": "ai",
-        "text": "hello"
-    },
-    {
-        "from": "user",
-        "text": "hi"
-    }
-]
-
-export default function Chat() {
+interface ChatProps {
+    chat: ChatMessage[];
+}
+export default function Chat({ chat }: ChatProps) {
   return (
-    <main className='flex h-96 border-2 border-gray w-full flex-col px-4 py-4'>
-        {chatMessages.map((value, key) => {
-            if(value.from == "ai") {
-                return (<div key={key} className='w-full text-left'>{value.text}</div>)
-            } else {
-                return (<div key={key} className='w-full text-right'>{value.text}</div>)
-            }
-        })}
-    </main>
+    <ScrollArea  className='flex h-96 border-2 border-gray w-full flex-col px-4 py-4 r'>
+        {chat.map(({ from, text }, key) => (
+            <div
+            key={key}
+            className={`w-full ${from === "ai" ? "text-left" : "text-right"}`}
+            >
+            {text}
+            </div>
+        ))}
+    </ScrollArea >
   )
 }

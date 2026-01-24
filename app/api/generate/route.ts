@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
     try {
         const { prompt, model } = await request.json();
-
+        
         // Validate input
         if (!prompt || !model) {
             return NextResponse.json(
