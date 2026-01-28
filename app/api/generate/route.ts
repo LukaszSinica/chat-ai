@@ -12,8 +12,6 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        console.log('Sending to Ollama:', { prompt, model });
-
         const res = await fetch('http://localhost:11434/api/generate', {
             headers: {
                 'Content-Type': 'application/json',
@@ -36,7 +34,6 @@ export async function POST(request: NextRequest) {
         }
 
         const data = await res.json();
-        console.log('Ollama response:', data);
 
         return NextResponse.json(data);
 
