@@ -19,7 +19,7 @@ export default function Home() {
 
   const [chat, setChat] = useState<ChatMessage[]>(chatMessages);
 
-  async function generateResponse(prompt: string) {
+  async function generateResponse(prompt: string, model: string) {
     setChat(prev => [
       ...prev,
       { from: "ai", text: "..." }
@@ -32,18 +32,29 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "qwen3-coder:30b",
+          model: model,
           prompt,
         }),
       });
   
       const data = await res.json();
-  
+      
+      if(!data.error) {
+        setChat(prev => {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            from: "ai",
+            text: data.response,
+          };
+          return updated;
+        });
+      }
+      
       setChat(prev => {
         const updated = [...prev];
         updated[updated.length - 1] = {
           from: "ai",
-          text: data.response,
+          text: data.error,
         };
         return updated;
       });
