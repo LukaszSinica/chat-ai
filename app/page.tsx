@@ -18,13 +18,13 @@ export interface ChatMessage {
 export default function Home() {
 
   const [chat, setChat] = useState<ChatMessage[]>(chatMessages);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   async function generateResponse(prompt: string, model: string) {
     setChat(prev => [
       ...prev,
       { from: "ai", text: "..." }
     ]);
-  
+    setIsLoading(true);
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -38,7 +38,8 @@ export default function Home() {
       });
   
       const data = await res.json();
-      
+      setIsLoading(false);
+
       if(!data.error) {
         setChat(prev => {
           const updated = [...prev];
@@ -48,17 +49,18 @@ export default function Home() {
           };
           return updated;
         });
+        
       }
-      
-      setChat(prev => {
-        const updated = [...prev];
-        updated[updated.length - 1] = {
-          from: "ai",
-          text: data.error,
-        };
-        return updated;
-      });
-  
+      else {
+        setChat(prev => {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            from: "ai",
+            text: data.error,
+          };
+          return updated;
+        });
+      }
     } catch (error) {
 
       setChat(prev => {
@@ -76,7 +78,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center  font-sans ">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center py-32 px-16 sm:items-start">
-          <Chat chat={chat}/>
+          <Chat chat={chat} isLoading={isLoading}/>
           <TextareaButton setChat={setChat} generateResponse={generateResponse}/>
       </main>
     </div>

@@ -11,6 +11,7 @@ type Part =
 
 
 export function parseTextWithSnippets(text: string): Part[] {
+  if (!text) return [];
   const regex = /```[\s\S]*?```/g;
   const parts: Part[] = [];
 
