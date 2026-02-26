@@ -8,14 +8,14 @@ interface ChatProps {
 export default function Chat({ chat, isLoading }: ChatProps) {
 
   return (
-    <ScrollArea className='flex h-96 border-2 border-gray w-full flex-col p-4'>
-      <main className="h-full w-full flex flex-col">
+    <ScrollArea className='flex h-96 border-2 border-gray w-full flex-col p-4 overflow-hidden'>
+  <main className="h-full w-full flex flex-col overflow-hidden">
         {chat.map(({ from, text }, key) => (
-            <div
+          <div
             key={key}
-            className={`w-full ${from === "ai" ? "text-left" : "text-right"}`}
-            >
-            <Text key={key} text={text} isLoading={isLoading && key === chat.length - 1}/>
+            className={`flex flex-col w-full py-1 overflow-hidden ${from === "ai" ? "text-left" : "justify-end text-right"}`}
+          >
+            <Text key={key} text={text} from={from} isLoading={isLoading && key === chat.length - 1}/>
             </div>
         ))}
       </main>
