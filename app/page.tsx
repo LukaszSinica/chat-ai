@@ -77,9 +77,26 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-center justify-center  font-sans ">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center py-32 px-16 sm:items-start">
-          <Chat chat={chat} isLoading={isLoading}/>
-          <TextareaButton setChat={setChat} generateResponse={generateResponse}/>
+      <main className="flex min-h-screen w-full max-w-5xl items-center py-32 px-16 sm:items-start">
+
+          <div className="flex w-full h-full">
+          <div className="flex flex-col w-2/6 border-2">
+            <div className="text-center border-2 text-sm rounded border-gray-300 font-semibold p-2 hover:bg-gray-200 my-0.1">
+              first room
+            </div>
+            <div className="text-center border-2 text-sm rounded border-gray-300 font-semibold p-2 hover:bg-gray-200 my-0.1">
+              second room
+            </div>
+            <div className="text-center border-2 text-sm rounded border-gray-300 font-semibold p-2 hover:bg-gray-200 my-0.1">
+              third room
+            </div>
+          </div>
+          <div className="flex flex-col w-4/5">
+            <Chat chat={chat} isLoading={isLoading}/>
+            <TextareaButton setChat={setChat} generateResponse={generateResponse}/>
+            </div>
+          </div>
+
       </main>
     </div>
   );
